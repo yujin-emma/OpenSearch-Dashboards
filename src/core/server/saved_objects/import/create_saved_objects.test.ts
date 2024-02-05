@@ -231,6 +231,13 @@ describe('#createSavedObjects', () => {
         getResultMock.conflict(obj11.type, obj11.id),
         getResultMock.success(obj12, options),
         getResultMock.conflict(obj13.type, obj13.id),
+      ],
+    });
+  };
+
+  const setupMockResultsWithDataSource = (options: CreateSavedObjectsParams) => {
+    bulkCreate.mockResolvedValue({
+      saved_objects: [
         getResultMock.conflict(dataSourceObj2.type, dataSourceObj2.id),
         getResultMock.success(dataSourceObj1, options),
       ],
