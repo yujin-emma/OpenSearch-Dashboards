@@ -238,15 +238,6 @@ describe('#createSavedObjects', () => {
   const setupMockResultsWithDataSource = (options: CreateSavedObjectsParams) => {
     bulkCreate.mockResolvedValue({
       saved_objects: [
-        getResultMock.conflict(dataSourceObj2.type, dataSourceObj2.id),
-        getResultMock.success(dataSourceObj1, options),
-      ],
-    });
-  };
-
-  const setupMockResultsWithDataSource = (options: CreateSavedObjectsParams) => {
-    bulkCreate.mockResolvedValue({
-      saved_objects: [
         getResultMock.conflict(dataSourceObj1.type, dataSourceObj1.id),
         getResultMock.success(dataSourceObj2, options),
         getResultMock.success(dashboardObjWithDataSource, options),
@@ -459,11 +450,7 @@ describe('#createSavedObjects', () => {
   });
 
   describe('with a data source', () => {
-<<<<<<< HEAD
     test('calls bulkCreate once with input objects with data source id', async () => {
-=======
-    test('calls bulkCreate once with input objects', async () => {
->>>>>>> add more test
       await testBulkCreateObjectsWithDataSource(
         'some-namespace',
         'some-datasource-id',
