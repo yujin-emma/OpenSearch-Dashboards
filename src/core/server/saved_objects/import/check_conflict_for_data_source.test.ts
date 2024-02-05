@@ -1,4 +1,9 @@
 /*
+ * Copyright OpenSearch Contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
 <<<<<<< HEAD
  * Copyright OpenSearch Contributors
  * SPDX-License-Identifier: Apache-2.0
@@ -76,20 +81,12 @@ const obj1 = createObject('type-1', 'id-1'); // -> success
 const obj2 = createObject('type-2', 'id-2'); // -> conflict
 const obj3 = createObject('type-3', 'id-3'); // -> unresolvable conflict
 const obj4 = createObject('type-4', 'id-4'); // -> invalid type
-<<<<<<< HEAD
 const dataSourceObj = createObject('data-source', 'data-source-id-1'); // -> data-source type, no need to add in the filteredObjects
 const objects = [obj1, obj2, obj3, obj4];
 const dataSourceObj1 = createObject('type-1', 'ds_id-1'); // -> object with data source id
 const dataSourceObj2 = createObject('type-2', 'ds_id-2'); // -> object with data source id
 const objectsWithDataSource = [dataSourceObj, dataSourceObj1, dataSourceObj2];
 const dataSourceObj1Error = getResultMock.conflict(dataSourceObj1.type, dataSourceObj1.id);
-=======
-const dsObj = createObject('data-source', 'data-source-id-1'); // -> data-source type, no need to add in the filteredObjects
-const objects = [obj1, obj2, obj3, obj4];
-const dsObj1 = createObject('type-1', 'ds_id-1'); // -> object with data source id
-const dsObj2 = createObject('type-2', 'ds_id-2'); // -> object with data source id
-const objectsWithDataSource = [dsObj, dsObj1, dsObj2];
-const dsObj1Error = getResultMock.conflict(dsObj1.type, dsObj1.id);
 
 describe('#checkConflictsForDataSource', () => {
   const setupParams = (partial: {
@@ -158,7 +155,7 @@ describe('#checkConflictsForDataSource', () => {
           {
             ...dataSourceObj2,
             id: 'currentDsId_id-2',
-          }
+          },
         ],
         errors: [],
         importIdMap: new Map([
@@ -174,7 +171,7 @@ describe('#checkConflictsForDataSource', () => {
         pendingOverwrites: new Set([
           `${dataSourceObj1.type}:${dataSourceObj1.id}`,
           `${dataSourceObj2.type}:${dataSourceObj2.id}`,
-        ])
+        ]),
       })
     );
   });
