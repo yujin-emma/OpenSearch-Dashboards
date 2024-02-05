@@ -231,6 +231,8 @@ describe('#createSavedObjects', () => {
         getResultMock.conflict(obj11.type, obj11.id),
         getResultMock.success(obj12, options),
         getResultMock.conflict(obj13.type, obj13.id),
+        getResultMock.conflict(dataSourceObj2.type, dataSourceObj2.id),
+        getResultMock.success(dataSourceObj1, options),
       ],
     });
   };
@@ -450,7 +452,11 @@ describe('#createSavedObjects', () => {
   });
 
   describe('with a data source', () => {
+<<<<<<< HEAD
     test('calls bulkCreate once with input objects with data source id', async () => {
+=======
+    test('calls bulkCreate once with input objects', async () => {
+>>>>>>> add more test
       await testBulkCreateObjectsWithDataSource(
         'some-namespace',
         'some-datasource-id',
