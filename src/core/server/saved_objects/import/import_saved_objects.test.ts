@@ -242,6 +242,7 @@ describe('#importSavedObjectsFromStream', () => {
 
       test('checks data source conflicts', async () => {
         const options = setupOptions(false, testDataSourceId);
+        const optionsCreateNewCopies = setupOptions(true, testDataSourceId);
         const collectedObjects = [createObject()];
         getMockFn(collectSavedObjects).mockResolvedValue({
           errors: [],
@@ -250,12 +251,22 @@ describe('#importSavedObjectsFromStream', () => {
         });
 
         await importSavedObjectsFromStream(options);
+        const createNewCopyResult = await importSavedObjectsFromStream(optionsCreateNewCopies);
+
         const checkConflictsForDataSourceParams = {
           objects: collectedObjects,
           ignoreRegularConflicts: overwrite,
           dataSourceId: testDataSourceId,
         };
+
+        const checkConflictsForDataSourceParamsCreateNewCopies = {
+          objects: collectedObjects,
+          ignoreRegularConflicts: !overwrite,
+          dataSourceId: testDataSourceId,
+        }
         expect(checkConflictsForDataSource).toHaveBeenCalledWith(checkConflictsForDataSourceParams);
+        expect(checkConflictsForDataSource).toHaveBeenCalledWith(checkConflictsForDataSourceParamsCreateNewCopies);
+
       });
 
       test('creates saved objects', async () => {
