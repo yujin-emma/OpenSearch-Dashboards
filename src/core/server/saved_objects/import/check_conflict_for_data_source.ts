@@ -75,8 +75,6 @@ export async function checkConflictsForDataSource({
       } else {
         const omitOriginId = ignoreRegularConflicts;
         importIdMap.set(`${type}:${id}`, { id: `${dataSourceId}_${rawId}`, omitOriginId });
-        // console.log("in check data source conflict", `${type}:${id}`)
-        // pendingOverwrites.add(`${type}:${id}`);
         filteredObjects.push({ ...object, id: `${dataSourceId}_${rawId}` });
       }
     }

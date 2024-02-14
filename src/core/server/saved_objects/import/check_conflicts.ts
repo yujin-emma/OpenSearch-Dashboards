@@ -82,7 +82,6 @@ export async function checkConflicts({
     (acc, { type, id, error }) => acc.set(`${type}:${id}`, error),
     new Map<string, SavedObjectError>()
   );
-  console.log("in checkk conclict", checkConflictsResult);
 
   objects.forEach((object) => {
     const {
