@@ -27,7 +27,6 @@ import {
 import { DataSourceDropDownHeader } from '../drop_down_header';
 import { DataSourceItem } from '../data_source_item';
 import { LocalCluster } from '../constants';
-import { NoDataSource } from '../no_data_source';
 import './data_source_view.scss';
 import { DataSourceViewError } from './data_source_view_error';
 
@@ -58,7 +57,7 @@ export class DataSourceView extends React.Component<DataSourceViewProps, DataSou
     this.state = {
       isPopoverOpen: false,
       selectedOption: this.props.selectedOption ? this.props.selectedOption : [],
-      showEmptyState: !this.props.selectedOption?.length && this.props.hideLocalCluster,
+      showEmptyState: false,
       showError: false,
       defaultDataSource: null,
     };
@@ -94,12 +93,10 @@ export class DataSourceView extends React.Component<DataSourceViewProps, DataSou
     ) {
       this.setState({
         selectedOption: [],
-        showEmptyState: true,
       });
       if (this.props.onSelectedDataSources) {
         this.props.onSelectedDataSources([]);
       }
-      handleNoAvailableDataSourceError(this.props.notifications!);
       return;
     }
 
@@ -171,14 +168,6 @@ export class DataSourceView extends React.Component<DataSourceViewProps, DataSou
   }
 
   render() {
-    if (this.state.showEmptyState) {
-      return (
-        <NoDataSource
-          totalDataSourceCount={this.state.selectedOption.length}
-          application={this.props.application}
-        />
-      );
-    }
     if (this.state.showError) {
       return (
         <DataSourceViewError
