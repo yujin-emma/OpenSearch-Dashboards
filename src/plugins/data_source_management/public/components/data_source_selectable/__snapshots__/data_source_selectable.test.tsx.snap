@@ -305,7 +305,7 @@ Object {
                     class="euiLink euiLink--primary"
                     type="button"
                   >
-                    Manage
+                    Manage data sources
                   </button>
                 </div>
               </div>
