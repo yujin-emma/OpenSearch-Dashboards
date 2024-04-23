@@ -1,0 +1,98 @@
+/*
+ * Copyright OpenSearch Contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from 'react';
+import { i18n } from '@osd/i18n';
+import { ApplicationStart } from 'opensearch-dashboards/public';
+import {
+  EuiButton,
+  EuiButtonIcon,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiPanel,
+  EuiPopover,
+  EuiPopoverFooter,
+  EuiText,
+} from '@elastic/eui';
+import { ErrorIcon } from '../custom_database_icon';
+import { DataSourceDropDownHeader } from '../drop_down_header';
+import { DataSourceOption } from '../data_source_selector';
+
+interface DataSourceViewErrorProps {
+  application?: ApplicationStart;
+  dataSourceId: string;
+  showSwitchButton: boolean;
+  handleSwitchDefaultDatasource?: () => void;
+}
+
+export const DataSourceViewError = ({
+  application,
+  dataSourceId,
+  showSwitchButton,
+  handleSwitchDefaultDatasource,
+}: DataSourceViewErrorProps) => {
+  const [showPopover, setShowPopover] = useState<boolean>(false);
+
+  const refreshButton = (
+    <EuiButton
+      data-test-subj="dataSourceErrorRefreshButton"
+      fill={false}
+      size="s"
+      onClick={handleSwitchDefaultDatasource}
+    >
+      {i18n.translate('dataSourcesManagement.dataSourceErrorMenu.switchToDefaultDataSource', {
+        defaultMessage: 'Switch to default data source',
+      })}
+    </EuiButton>
+  );
+
+  const iconButton = (
+    <EuiButtonIcon
+      className="euiHeaderLink"
+      data-test-subj="dataSourceErrorMenuHeaderLink"
+      aria-label={i18n.translate('dataSourceError.dataSourceErrorMenuHeaderLink', {
+        defaultMessage: 'dataSourceErrorMenuHeaderLink',
+      })}
+      iconType={() => <ErrorIcon />}
+      size="s"
+      onClick={() => setShowPopover(!showPopover)}
+    />
+  );
+
+  return (
+    <>
+      <EuiPopover
+        id={'dataSourceErrorPopover'}
+        button={iconButton}
+        isOpen={showPopover}
+        closePopover={() => setShowPopover(false)}
+        panelPaddingSize="none"
+        anchorPosition="downLeft"
+        data-test-subj={'dataSourceErrorPopover'}
+      >
+        <DataSourceDropDownHeader totalDataSourceCount={0} application={application} />
+        <EuiPanel
+          hasBorder={false}
+          hasShadow={false}
+          className="dataSourceEmptyStatePanel"
+          data-test-subj="datasourceTableEmptyState"
+        >
+          <EuiText size="s" textAlign="center">
+            {i18n.translate('dataSourcesManagement.dataSourceErrorMenu.text', {
+              defaultMessage: `Data source ${dataSourceId.toString()} is not available`,
+            })}
+          </EuiText>
+        </EuiPanel>
+        {showSwitchButton && (
+          <EuiPopoverFooter>
+            <EuiFlexGroup justifyContent="spaceAround">
+              <EuiFlexItem>{refreshButton}</EuiFlexItem>
+            </EuiFlexGroup>
+          </EuiPopoverFooter>
+        )}
+      </EuiPopover>
+    </>
+  );
+};

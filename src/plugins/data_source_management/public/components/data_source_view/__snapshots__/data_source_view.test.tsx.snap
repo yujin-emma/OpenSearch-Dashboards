@@ -134,7 +134,13 @@ exports[`DataSourceView should call getDataSourceById when only pass id with no 
 </EuiPopover>
 `;
 
-exports[`DataSourceView should call notification warning when there is data source fetch error 1`] = `<DataSourceErrorMenu />`;
+exports[`DataSourceView should call notification warning when there is data source fetch error 1`] = `
+<DataSourceViewError
+  dataSourceId="test1"
+  handleSwitchDefaultDatasource={[Function]}
+  showSwitchButton={false}
+/>
+`;
 
 exports[`DataSourceView should render normally with local cluster not hidden 1`] = `
 <EuiPopover
@@ -283,7 +289,7 @@ Object {
                     class="euiLink euiLink--primary"
                     type="button"
                   >
-                    Manage
+                    Manage data sources
                   </button>
                 </div>
               </div>
