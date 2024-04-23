@@ -18,6 +18,7 @@ import {
 } from '@elastic/eui';
 import { ErrorIcon } from '../custom_database_icon';
 import { DataSourceDropDownHeader } from '../drop_down_header';
+import { switchDefaultButton } from '../toast_button/switch_default_button';
 
 interface DataSourceViewErrorProps {
   application?: ApplicationStart;

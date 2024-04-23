@@ -22,6 +22,7 @@ import { DataSourceBaseState, DataSourceOption } from '../data_source_menu/types
 import {
   getDataSourceById,
   handleDataSourceFetchError,
+  handleDataSourceViewError,
   handleNoAvailableDataSourceError,
 } from '../utils';
 import { DataSourceDropDownHeader } from '../drop_down_header';
@@ -118,10 +119,12 @@ export class DataSourceView extends React.Component<DataSourceViewProps, DataSou
         if (defaultDataSource) {
           this.setState({ defaultDataSource });
         }
-        handleDataSourceFetchError(
+        handleDataSourceViewError(
           this.onError.bind(this),
           this.props.notifications!,
-          this.props.onSelectedDataSources
+          this.state.selectedOption[0].id,
+          this.state.defaultDataSource,
+          () => this.handleSwitchDefaultDatasource()
         );
       }
     } else if (this.props.onSelectedDataSources) {

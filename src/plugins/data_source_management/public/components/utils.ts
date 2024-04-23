@@ -25,6 +25,7 @@ import { DataSourceGroupLabelOption } from './data_source_menu/types';
 import { createGetterSetter } from '../../../opensearch_dashboards_utils/public';
 import { toMountPoint } from '../../../opensearch_dashboards_react/public';
 import { getManageDataSourceButton, getReloadButton } from './toast_button';
+import { switchDefaultButton } from './toast_button/switch_default_button';
 
 export async function getDataSources(savedObjectsClient: SavedObjectsClientContract) {
   return savedObjectsClient
@@ -299,6 +300,23 @@ export const handleDataSourceFetchError = (
       defaultMessage: 'Failed to fetch data sources',
     }),
     text: toMountPoint(getReloadButton()),
+    color: 'danger',
+  });
+};
+
+export const handleDataSourceViewError = (
+  changeState: (state: { showError: boolean }) => void,
+  notifications: ToastsStart,
+  failedDataSourceId: string,
+  defaultDataSource: string | null,
+  callback?: () => Promise<void>
+) => {
+  changeState({ showError: true });
+  notifications.add({
+    title: i18n.translate('dataSource.dataSourceUnavailableError', {
+      defaultMessage: `Data source ${failedDataSourceId} is not available `,
+    }),
+    text: defaultDataSource && callback ? toMountPoint(switchDefaultButton(callback)) : '',
     color: 'danger',
   });
 };
