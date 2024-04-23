@@ -18,7 +18,6 @@ import {
 } from '@elastic/eui';
 import { ErrorIcon } from '../custom_database_icon';
 import { DataSourceDropDownHeader } from '../drop_down_header';
-import { DataSourceOption } from '../data_source_selector';
 
 interface DataSourceViewErrorProps {
   application?: ApplicationStart;
@@ -35,14 +34,14 @@ export const DataSourceViewError = ({
 }: DataSourceViewErrorProps) => {
   const [showPopover, setShowPopover] = useState<boolean>(false);
 
-  const refreshButton = (
+  const switchButton = (
     <EuiButton
-      data-test-subj="dataSourceErrorRefreshButton"
+      data-test-subj="dataSourceViewErrorSwitchButton"
       fill={false}
       size="s"
       onClick={handleSwitchDefaultDatasource}
     >
-      {i18n.translate('dataSourcesManagement.dataSourceErrorMenu.switchToDefaultDataSource', {
+      {i18n.translate('dataSourcesManagement.dataSourceViewError.switchToDefaultDataSource', {
         defaultMessage: 'Switch to default data source',
       })}
     </EuiButton>
@@ -51,8 +50,8 @@ export const DataSourceViewError = ({
   const iconButton = (
     <EuiButtonIcon
       className="euiHeaderLink"
-      data-test-subj="dataSourceErrorMenuHeaderLink"
-      aria-label={i18n.translate('dataSourceError.dataSourceErrorMenuHeaderLink', {
+      data-test-subj="dataSourceViewErrorHeaderLink"
+      aria-label={i18n.translate('dataSourceError.dataSourceErrorHeaderLink', {
         defaultMessage: 'dataSourceErrorMenuHeaderLink',
       })}
       iconType={() => <ErrorIcon />}
@@ -70,7 +69,7 @@ export const DataSourceViewError = ({
         closePopover={() => setShowPopover(false)}
         panelPaddingSize="none"
         anchorPosition="downLeft"
-        data-test-subj={'dataSourceErrorPopover'}
+        data-test-subj={'dataSourceViewErrorPopover'}
       >
         <DataSourceDropDownHeader totalDataSourceCount={0} application={application} />
         <EuiPanel
@@ -88,7 +87,7 @@ export const DataSourceViewError = ({
         {showSwitchButton && (
           <EuiPopoverFooter>
             <EuiFlexGroup justifyContent="spaceAround">
-              <EuiFlexItem>{refreshButton}</EuiFlexItem>
+              <EuiFlexItem>{switchButton}</EuiFlexItem>
             </EuiFlexGroup>
           </EuiPopoverFooter>
         )}
