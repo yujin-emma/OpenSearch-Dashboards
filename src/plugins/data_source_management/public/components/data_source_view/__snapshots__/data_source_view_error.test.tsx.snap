@@ -8,14 +8,14 @@ Object {
       <div
         class="euiPopover euiPopover--anchorDownLeft"
         data-test-subj="dataSourceViewErrorPopover"
-        id="dataSourceErrorPopover"
+        id="dataSourceViewErrorPopover"
       >
         <div
           class="euiPopover__anchor"
         >
           <button
-            aria-label="dataSourceErrorMenuHeaderLink"
-            class="euiButtonIcon euiButtonIcon--primary euiButtonIcon--empty euiButtonIcon--small euiHeaderLink"
+            aria-label="dataSourceViewErrorHeaderLink"
+            class="euiButtonIcon euiButtonIcon--primary euiButtonIcon--empty euiButtonIcon--small dataSourceViewErrorHeaderLink"
             data-test-subj="dataSourceViewErrorHeaderLink"
             type="button"
           >
@@ -34,14 +34,14 @@ Object {
     <div
       class="euiPopover euiPopover--anchorDownLeft"
       data-test-subj="dataSourceViewErrorPopover"
-      id="dataSourceErrorPopover"
+      id="dataSourceViewErrorPopover"
     >
       <div
         class="euiPopover__anchor"
       >
         <button
-          aria-label="dataSourceErrorMenuHeaderLink"
-          class="euiButtonIcon euiButtonIcon--primary euiButtonIcon--empty euiButtonIcon--small euiHeaderLink"
+          aria-label="dataSourceViewErrorHeaderLink"
+          class="euiButtonIcon euiButtonIcon--primary euiButtonIcon--empty euiButtonIcon--small dataSourceViewErrorHeaderLink"
           data-test-subj="dataSourceViewErrorHeaderLink"
           type="button"
         >
@@ -115,8 +115,8 @@ exports[`DataSourceViewError component should render without crashing 1`] = `
     anchorPosition="downLeft"
     button={
       <EuiButtonIcon
-        aria-label="dataSourceErrorMenuHeaderLink"
-        className="euiHeaderLink"
+        aria-label="dataSourceViewErrorHeaderLink"
+        className="dataSourceViewErrorHeaderLink"
         data-test-subj="dataSourceViewErrorHeaderLink"
         iconType={[Function]}
         onClick={[Function]}
@@ -127,7 +127,7 @@ exports[`DataSourceViewError component should render without crashing 1`] = `
     data-test-subj="dataSourceViewErrorPopover"
     display="inlineBlock"
     hasArrow={true}
-    id="dataSourceErrorPopover"
+    id="dataSourceViewErrorPopover"
     isOpen={false}
     ownFocus={true}
     panelPaddingSize="none"
@@ -136,8 +136,8 @@ exports[`DataSourceViewError component should render without crashing 1`] = `
       totalDataSourceCount={0}
     />
     <EuiPanel
-      className="dataSourceEmptyStatePanel"
-      data-test-subj="datasourceTableEmptyState"
+      className="datasourceViewErrorPanel"
+      data-test-subj="datasourceViewErrorPanel"
       hasBorder={false}
       hasShadow={false}
     >
