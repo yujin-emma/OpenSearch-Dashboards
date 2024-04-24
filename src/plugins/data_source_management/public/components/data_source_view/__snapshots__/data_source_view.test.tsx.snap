@@ -240,6 +240,14 @@ exports[`DataSourceView should call notification warning when there is data sour
 />
 `;
 
+exports[`DataSourceView should render fetch error and call switch to default data source when pass in invalid data source id and there is default option 1`] = `
+<DataSourceViewError
+  dataSourceId="test1"
+  handleSwitchDefaultDatasource={[Function]}
+  showSwitchButton={false}
+/>
+`;
+
 exports[`DataSourceView should render normally with local cluster not hidden 1`] = `
 <EuiPopover
   anchorPosition="downLeft"

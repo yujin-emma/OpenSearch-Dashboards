@@ -18,7 +18,6 @@ import {
 } from '@elastic/eui';
 import { ErrorIcon } from '../custom_database_icon';
 import { DataSourceDropDownHeader } from '../drop_down_header';
-import { switchDefaultButton } from '../toast_button/switch_default_button';
 
 interface DataSourceViewErrorProps {
   application?: ApplicationStart;
@@ -64,7 +63,7 @@ export const DataSourceViewError = ({
   return (
     <>
       <EuiPopover
-        id={'dataSourceErrorPopover'}
+        id={'dataSourceViewErrorPopover'}
         button={iconButton}
         isOpen={showPopover}
         closePopover={() => setShowPopover(false)}
@@ -77,11 +76,11 @@ export const DataSourceViewError = ({
           hasBorder={false}
           hasShadow={false}
           className="dataSourceEmptyStatePanel"
-          data-test-subj="datasourceTableEmptyState"
+          data-test-subj="datasourceViewErrorState"
         >
           <EuiText size="s" textAlign="center">
             {i18n.translate('dataSourcesManagement.dataSourceErrorMenu.text', {
-              defaultMessage: `Data source ${dataSourceId.toString()} is not available`,
+              defaultMessage: `Data source ${dataSourceId} is not available`,
             })}
           </EuiText>
         </EuiPanel>

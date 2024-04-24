@@ -8,7 +8,11 @@ import React from 'react';
 import { DataSourceView } from './data_source_view';
 import { SavedObjectsClientContract } from 'opensearch-dashboards/public';
 import { notificationServiceMock } from '../../../../../core/public/mocks';
-import { getSingleDataSourceResponse, mockResponseForSavedObjectsCalls } from '../../mocks';
+import {
+  getSingleDataSourceResponse,
+  mockManagementPlugin,
+  mockResponseForSavedObjectsCalls,
+} from '../../mocks';
 import { render } from '@testing-library/react';
 import * as utils from '../utils';
 
@@ -151,5 +155,25 @@ describe('DataSourceView', () => {
       />
     );
     expect(onSelectedDataSource).toBeCalledWith([]);
+  });
+
+  it('should render fetch error and call switch to default data source when pass in invalid data source id and there is default option', async () => {
+    spyOn(utils, 'getDataSourceById').and.throwError('Data source is not available');
+    spyOn(utils, 'getDefaultDataSource').and.returnValue([{ id: 'test2', label: 'test2' }]);
+    const container = render(
+      <DataSourceView
+        savedObjectsClient={client}
+        notifications={toasts}
+        selectedOption={[{ id: 'any id' }]}
+        hideLocalCluster={false}
+        fullWidth={false}
+      />
+    );
+    const button = await container.findByTestId('dataSourceViewErrorPopover');
+    button.click();
+    expect(component).toMatchSnapshot();
+    expect(toasts.add).toBeCalledTimes(1);
+    expect(utils.getDataSourceById).toBeCalledTimes(1);
+    expect(container.getByTestId('dataSourceViewErrorHeaderLink')).toBeVisible();
   });
 });

@@ -7,7 +7,7 @@ import { EuiButton } from '@elastic/eui';
 import React from 'react';
 import { i18n } from '@osd/i18n';
 
-export const switchDefaultButton = (handleSwitchDefaultDatasource: () => Promise<void>) => {
+export const switchToDefaultButton = (handleSwitchDefaultDatasource: () => Promise<void>) => {
   return (
     <EuiButton
       data-test-subj="dataSourceViewErrorSwitchButton"
