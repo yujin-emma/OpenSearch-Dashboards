@@ -20,10 +20,10 @@ import { ErrorIcon } from '../custom_database_icon';
 import { DataSourceDropDownHeader } from '../drop_down_header';
 
 interface DataSourceViewErrorProps {
-  application?: ApplicationStart;
   dataSourceId: string;
   showSwitchButton: boolean;
   handleSwitchDefaultDatasource?: () => void;
+  application?: ApplicationStart;
 }
 
 export const DataSourceViewError = ({
@@ -49,10 +49,10 @@ export const DataSourceViewError = ({
 
   const iconButton = (
     <EuiButtonIcon
-      className="euiHeaderLink"
+      className="dataSourceViewErrorHeaderLink"
       data-test-subj="dataSourceViewErrorHeaderLink"
-      aria-label={i18n.translate('dataSourceError.dataSourceErrorHeaderLink', {
-        defaultMessage: 'dataSourceErrorMenuHeaderLink',
+      aria-label={i18n.translate('dataSourceError.dataSourceViewErrorHeaderLink', {
+        defaultMessage: 'dataSourceViewErrorHeaderLink',
       })}
       iconType={() => <ErrorIcon />}
       size="s"
@@ -75,11 +75,11 @@ export const DataSourceViewError = ({
         <EuiPanel
           hasBorder={false}
           hasShadow={false}
-          className="dataSourceEmptyStatePanel"
-          data-test-subj="datasourceViewErrorState"
+          className="datasourceViewErrorPanel"
+          data-test-subj="datasourceViewErrorPanel"
         >
           <EuiText size="s" textAlign="center">
-            {i18n.translate('dataSourcesManagement.dataSourceErrorMenu.text', {
+            {i18n.translate('dataSourcesManagement.dataSourceViewError.text', {
               defaultMessage: `Data source ${dataSourceId} is not available`,
             })}
           </EuiText>
