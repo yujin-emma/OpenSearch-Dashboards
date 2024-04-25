@@ -304,13 +304,32 @@ export const handleDataSourceFetchError = (
   });
 };
 
-export const handleDataSourceViewError = (
-  changeState: (state: { showError: boolean }) => void,
-  notifications: ToastsStart,
-  failedDataSourceId: string,
-  defaultDataSource: string | null,
-  callback: () => Promise<void>
+export interface DataSourceViewErrorWithDefaultParams {
+  changeState: (state: { showError: boolean }) => void;
+  notifications: ToastsStart;
+  failedDataSourceId: string;
+  defaultDataSource: string | null;
+  callback: () => Promise<void>;
+}
+/**
+ *
+ * @param dataSourceViewErrorParams
+ * pass in state to control the display of toast warning notification
+ * pass in the notification props to display the current error ( switch to default data source if available)
+ * pass in failedDataSourceId to construct the error message
+ * pass in the defaultDataSource to control whether display the button to switch
+ * pass in a callback if click switchToDefault button
+ */
+export const handleDataSourceViewErrorWithSwitchToDefaultOption = (
+  dataSourceViewErrorWithDefaultParams: DataSourceViewErrorWithDefaultParams
 ) => {
+  const {
+    changeState,
+    notifications,
+    failedDataSourceId,
+    defaultDataSource,
+    callback,
+  } = dataSourceViewErrorWithDefaultParams;
   changeState({ showError: true });
   notifications.add({
     title: i18n.translate('dataSource.dataSourceUnavailableError', {

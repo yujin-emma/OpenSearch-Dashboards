@@ -19,7 +19,11 @@ import {
 } from 'opensearch-dashboards/public';
 import { IUiSettingsClient } from 'src/core/public';
 import { DataSourceBaseState, DataSourceOption } from '../data_source_menu/types';
-import { getDataSourceById, handleDataSourceViewError } from '../utils';
+import {
+  DataSourceViewErrorWithDefaultParams,
+  getDataSourceById,
+  handleDataSourceViewErrorWithSwitchToDefaultOption,
+} from '../utils';
 import { DataSourceDropDownHeader } from '../drop_down_header';
 import { DataSourceItem } from '../data_source_item';
 import { LocalCluster } from '../constants';
@@ -111,29 +115,22 @@ export class DataSourceView extends React.Component<DataSourceViewProps, DataSou
           this.props.onSelectedDataSources([{ id: optionId, label: selectedDataSource.title }]);
         }
       } catch (error) {
-        // since we do not set the defaultDataSource when hit error, we need to set it before moving forward
-        if (defaultDataSource) {
-          const { dataSourceFilter } = this.props;
-          // check if the defaultDataSouce can be filtered out
-          const filteredDataSource = dataSourceFilter
-            ? [{ id: defaultDataSource }].filter(dataSourceFilter)
-            : [{ id: defaultDataSource }];
-          const filteredDefaultDataSource =
-            filteredDataSource.length === 0 ? null : filteredDataSource[0].id;
-          this.setState({
-            defaultDataSource: filteredDefaultDataSource,
-          });
-        }
-        if (!this.state.defaultDataSource) {
+        // return [] to customer when no default data source
+        if (!defaultDataSource) {
           this.props.onSelectedDataSources?.([]);
         }
-        handleDataSourceViewError(
-          this.onError.bind(this),
-          this.props.notifications!,
-          optionId,
-          this.state.defaultDataSource, // put here to make sure can get the updated state
-          this.handleSwitchDefaultDatasource.bind(this, this.state.defaultDataSource)
-        );
+        this.setState({
+          defaultDataSource: this.getFilteredDefaultDataSource(defaultDataSource),
+        });
+        const handleDataSourceViewErrorParams = {
+          changeState: this.onError.bind(this),
+          notifications: this.props.notifications!,
+          failedDataSourceId: optionId,
+          defaultDataSource: this.state.defaultDataSource,
+          callback: this.handleSwitchDefaultDatasource.bind(this, this.state.defaultDataSource),
+        } as DataSourceViewErrorWithDefaultParams;
+
+        handleDataSourceViewErrorWithSwitchToDefaultOption(handleDataSourceViewErrorParams);
       }
     } else if (this.props.onSelectedDataSources) {
       this.setState({
@@ -154,6 +151,15 @@ export class DataSourceView extends React.Component<DataSourceViewProps, DataSou
 
   closePopover() {
     this.setState({ ...this.state, isPopoverOpen: false });
+  }
+  getFilteredDefaultDataSource(defaultDataSource: string | null): string | null {
+    if (!defaultDataSource) return defaultDataSource;
+    const { dataSourceFilter } = this.props;
+    // check if the defaultDataSouce can be filtered out
+    const filteredDataSource = dataSourceFilter
+      ? [{ id: defaultDataSource }].filter(dataSourceFilter)
+      : [{ id: defaultDataSource }];
+    return filteredDataSource.length === 0 ? null : filteredDataSource[0].id;
   }
   /**
    * when call handleSwitchDefaultDatasource, the default data source must exist,
